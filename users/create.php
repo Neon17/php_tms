@@ -13,7 +13,7 @@
         $name = $_POST['name'];
         $phone = $_POST['phone'];
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
 
         if ($name != "" && $phone != "" && $email != "" && $password != "") {
           $query = "INSERT INTO  users (name, phone, email, password) 
