@@ -5,7 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>Title</title>
 </head>
 
@@ -25,32 +26,49 @@
                         $password = md5($_POST['password']);
 
                         if ($name != "" && $phone != "" && $email != "" && $password != "") {
-                            $query = "INSERT INTO  users (name, phone, email, password) 
-          VALUES ('$name', '$phone', '$email','$password')";
-                            $result = mysqli_query($con, $query);
-                            if ($result) {
-                    ?>
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong>Your Data is Submitted</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            <?php
-                                header("Refresh:1; url=index.php");
-                            } else {
-                            ?>
-                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>Your Data is not Submitted</strong>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            <?php
-                                header("Refresh:1; url=register.php");
+                            $select = "SELECT * FROM users WHERE email = '$email'";
+                            $select_result =  mysqli_query($con,$select);
+                            $rows = mysqli_num_rows($select_result);
+                            if ($rows == 0){
+                                $query = "INSERT INTO  users (name, phone, email, password) 
+                                VALUES ('$name', '$phone', '$email','$password')";
+                                $result = mysqli_query($con, $query);
+                                if ($result) {
+                                    ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Your Data is Submitted</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php
+                                                header("Refresh:1; url=index.php");
+                                            } else {
+                                            ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Your Data is not Submitted</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php
+                                                header("Refresh:1; url=register.php");
+                                            }
                             }
+                            else {
+                                ?>
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+                        <strong>Email </strong>has already been token
+                    </div>
+
+                    <?php
+                            }
+                           
+
                         } else {
                             ?>
-                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                <strong>All Files are requires</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>All Files are requires</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <?php
                         }
                     }
@@ -66,15 +84,17 @@
                         </div>
                         <div class=" mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" id="exampleInputEmail1" name="email"
+                                aria-describedby="emailHelp">
                         </div>
                         <div class=" mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                            <input type="password" class="form-control" name="password" maxlength=15 minlength=8 id="exampleInputPassword1">
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary float-end btn-sm" name="save">Submit</button>
-                            <a class="btn btn-info btn-sm " href="index.php" role="button">I have already account: Login</a>
+                            <a class="btn btn-info btn-sm " href="index.php" role="button">I have already account:
+                                Login</a>
                         </div>
                     </form>
                 </div>
@@ -82,7 +102,8 @@
         </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
     </script>
 </body>
 
